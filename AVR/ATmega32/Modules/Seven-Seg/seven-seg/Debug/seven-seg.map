@@ -394,16 +394,16 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x48d
+.debug_info     0x00000000      0x48b
  *(.debug_info)
- .debug_info    0x00000000      0x1ff seven-segment.o
- .debug_info    0x000001ff      0x28e seven_seg.o
+ .debug_info    0x00000000      0x1fe seven-segment.o
+ .debug_info    0x000001fe      0x28d seven_seg.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x1ca
+.debug_abbrev   0x00000000      0x1e4
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0xe1 seven-segment.o
- .debug_abbrev  0x000000e1       0xe9 seven_seg.o
+ .debug_abbrev  0x00000000       0xee seven-segment.o
+ .debug_abbrev  0x000000ee       0xf6 seven_seg.o
 
 .debug_line     0x00000000      0x149
  *(.debug_line)
@@ -415,12 +415,12 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.1002/avr
  .debug_frame   0x00000000       0x34 seven-segment.o
  .debug_frame   0x00000034       0x54 seven_seg.o
 
-.debug_str      0x00000000      0x241
+.debug_str      0x00000000      0x24c
  *(.debug_str)
- .debug_str     0x00000000      0x19d seven-segment.o
-                                0x1d1 (size before relaxing)
- .debug_str     0x0000019d       0xa4 seven_seg.o
-                                0x214 (size before relaxing)
+ .debug_str     0x00000000      0x1a8 seven-segment.o
+                                0x1dc (size before relaxing)
+ .debug_str     0x000001a8       0xa4 seven_seg.o
+                                0x21a (size before relaxing)
 
 .debug_loc      0x00000000      0x2da
  *(.debug_loc)

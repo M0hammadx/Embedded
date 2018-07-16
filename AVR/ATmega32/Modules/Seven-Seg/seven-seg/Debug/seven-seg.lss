@@ -17,19 +17,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   6 .debug_aranges 00000058  00000000  00000000  00000af2  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   0000048d  00000000  00000000  00000b4a  2**0
+  7 .debug_info   0000048b  00000000  00000000  00000b4a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 000001ca  00000000  00000000  00000fd7  2**0
+  8 .debug_abbrev 000001e4  00000000  00000000  00000fd5  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000149  00000000  00000000  000011a1  2**0
+  9 .debug_line   00000149  00000000  00000000  000011b9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  00000088  00000000  00000000  000012ec  2**2
+ 10 .debug_frame  00000088  00000000  00000000  00001304  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00000241  00000000  00000000  00001374  2**0
+ 11 .debug_str    0000024c  00000000  00000000  0000138c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    000002da  00000000  00000000  000015b5  2**0
+ 12 .debug_loc    000002da  00000000  00000000  000015d8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000038  00000000  00000000  0000188f  2**0
+ 13 .debug_ranges 00000038  00000000  00000000  000018b2  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -109,7 +109,7 @@ int main(void)
   96:	1f 92       	push	r1
   98:	cd b7       	in	r28, 0x3d	; 61
   9a:	de b7       	in	r29, 0x3e	; 62
-	ecore_u8 id;
+	u8 id;
 	
 	seven_seg_init(BASE_C,COMMON_CATHOD,&id);
   9c:	ae 01       	movw	r20, r28
@@ -141,10 +141,10 @@ int main(void)
   ce:	ff cf       	rjmp	.-2      	; 0xce <main+0x3c>
 
 000000d0 <seven_seg_init>:
-		enum_seven_seg_type_t seven_seg_type, ecore_u8 * handler) {
+		enum_seven_seg_type_t seven_seg_type, u8 * handler) {
 	bool_t b_ret_val = E_TRUE;
 
-	ecore_u8 idx = 0;
+	u8 idx = 0;
 	for (; idx < MAX_NUMBER_OF_HANDLERS; idx++) {
 		if (ga_seven_handlers[idx].enum_base_port == 0)
   d0:	90 91 6a 00 	lds	r25, 0x006A
@@ -157,10 +157,10 @@ int main(void)
   e2:	03 c0       	rjmp	.+6      	; 0xea <seven_seg_init+0x1a>
 
 bool_t seven_seg_init(enum_port_base_t port_base,
-		enum_seven_seg_type_t seven_seg_type, ecore_u8 * handler) {
+		enum_seven_seg_type_t seven_seg_type, u8 * handler) {
 	bool_t b_ret_val = E_TRUE;
 
-	ecore_u8 idx = 0;
+	u8 idx = 0;
   e4:	70 e0       	ldi	r23, 0x00	; 0
   e6:	01 c0       	rjmp	.+2      	; 0xea <seven_seg_init+0x1a>
 	for (; idx < MAX_NUMBER_OF_HANDLERS; idx++) {
@@ -182,7 +182,7 @@ bool_t seven_seg_init(enum_port_base_t port_base,
   f8:	90 91 6e 00 	lds	r25, 0x006E
   fc:	92 30       	cpi	r25, 0x02	; 2
   fe:	e0 f4       	brcc	.+56     	; 0x138 <seven_seg_init+0x68>
-			*(volatile ecore_u8*) (port_base + 1) |= 0x7f;
+			*(volatile u8*) (port_base + 1) |= 0x7f;
  100:	e8 2f       	mov	r30, r24
  102:	f0 e0       	ldi	r31, 0x00	; 0
  104:	21 81       	ldd	r18, Z+1	; 0x01
@@ -209,10 +209,10 @@ bool_t seven_seg_init(enum_port_base_t port_base,
  126:	9f 5f       	subi	r25, 0xFF	; 255
  128:	90 93 6e 00 	sts	0x006E, r25
 
-static ecore_u8 handler_counter = 0;
+static u8 handler_counter = 0;
 
 bool_t seven_seg_init(enum_port_base_t port_base,
-		enum_seven_seg_type_t seven_seg_type, ecore_u8 * handler) {
+		enum_seven_seg_type_t seven_seg_type, u8 * handler) {
 	bool_t b_ret_val = E_TRUE;
  12c:	81 e0       	ldi	r24, 0x01	; 1
  12e:	08 95       	ret
@@ -243,7 +243,7 @@ bool_t seven_seg_init(enum_port_base_t port_base,
 
 0000013c <seven_seg_display>:
 
-bool_t seven_seg_display(ecore_u8 handler, ecore_u8 dis_no) {
+bool_t seven_seg_display(u8 handler, u8 dis_no) {
 	bool_t b_ret_val = E_TRUE;
 	if ((handler < MAX_NUMBER_OF_HANDLERS) && (dis_no < 10)) {
  13c:	82 30       	cpi	r24, 0x02	; 2
@@ -271,14 +271,14 @@ bool_t seven_seg_display(ecore_u8 handler, ecore_u8 dis_no) {
  164:	30 81       	ld	r19, Z
  166:	31 30       	cpi	r19, 0x01	; 1
  168:	b1 f4       	brne	.+44     	; 0x196 <seven_seg_display+0x5a>
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 				+ 2) &= ~(0x7f);
  16a:	e2 2f       	mov	r30, r18
  16c:	f0 e0       	ldi	r31, 0x00	; 0
  16e:	22 81       	ldd	r18, Z+2	; 0x02
  170:	20 78       	andi	r18, 0x80	; 128
  172:	22 83       	std	Z+2, r18	; 0x02
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
  174:	fc 01       	movw	r30, r24
  176:	ee 0f       	add	r30, r30
  178:	ff 1f       	adc	r31, r31
@@ -299,26 +299,26 @@ bool_t seven_seg_display(ecore_u8 handler, ecore_u8 dis_no) {
 	return b_ret_val;
 }
 
-bool_t seven_seg_display(ecore_u8 handler, ecore_u8 dis_no) {
+bool_t seven_seg_display(u8 handler, u8 dis_no) {
 	bool_t b_ret_val = E_TRUE;
  192:	81 e0       	ldi	r24, 0x01	; 1
  194:	08 95       	ret
 			if (ga_seven_handlers[handler].enum_type == COMMON_CATHOD) {
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 				+ 2) &= ~(0x7f);
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 						+ 2) |= pattern[dis_no];
 			} else if (ga_seven_handlers[handler].enum_type == COMMON_ANOD) {
  196:	31 11       	cpse	r19, r1
  198:	1d c0       	rjmp	.+58     	; 0x1d4 <seven_seg_display+0x98>
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 				+ 2) |= 0x7f;
  19a:	e2 2f       	mov	r30, r18
  19c:	f0 e0       	ldi	r31, 0x00	; 0
  19e:	22 81       	ldd	r18, Z+2	; 0x02
  1a0:	2f 67       	ori	r18, 0x7F	; 127
  1a2:	22 83       	std	Z+2, r18	; 0x02
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
  1a4:	fc 01       	movw	r30, r24
  1a6:	ee 0f       	add	r30, r30
  1a8:	ff 1f       	adc	r31, r31
@@ -340,7 +340,7 @@ bool_t seven_seg_display(ecore_u8 handler, ecore_u8 dis_no) {
 	return b_ret_val;
 }
 
-bool_t seven_seg_display(ecore_u8 handler, ecore_u8 dis_no) {
+bool_t seven_seg_display(u8 handler, u8 dis_no) {
 	bool_t b_ret_val = E_TRUE;
  1c4:	81 e0       	ldi	r24, 0x01	; 1
  1c6:	08 95       	ret
@@ -363,7 +363,7 @@ bool_t seven_seg_display(ecore_u8 handler, ecore_u8 dis_no) {
  1d0:	80 e0       	ldi	r24, 0x00	; 0
  1d2:	08 95       	ret
 				+ 2) |= 0x7f;
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 						+ 2) &= ~pattern[dis_no];
 			} else {
 				/*invalid parameter*/
@@ -379,7 +379,7 @@ bool_t seven_seg_display(ecore_u8 handler, ecore_u8 dis_no) {
 
 000001d8 <seven_seg_reset>:
 
-bool_t seven_seg_reset(ecore_u8 handler) {
+bool_t seven_seg_reset(u8 handler) {
 	bool_t b_ret_val = E_TRUE;
 	if ((handler < MAX_NUMBER_OF_HANDLERS)) {
  1d8:	82 30       	cpi	r24, 0x02	; 2
@@ -403,14 +403,14 @@ bool_t seven_seg_reset(ecore_u8 handler) {
  1f8:	30 81       	ld	r19, Z
  1fa:	31 30       	cpi	r19, 0x01	; 1
  1fc:	89 f4       	brne	.+34     	; 0x220 <seven_seg_reset+0x48>
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 				+ 2) &= ~(0x7f);
  1fe:	e2 2f       	mov	r30, r18
  200:	f0 e0       	ldi	r31, 0x00	; 0
  202:	22 81       	ldd	r18, Z+2	; 0x02
  204:	20 78       	andi	r18, 0x80	; 128
  206:	22 83       	std	Z+2, r18	; 0x02
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
  208:	fc 01       	movw	r30, r24
  20a:	ee 0f       	add	r30, r30
  20c:	ff 1f       	adc	r31, r31
@@ -426,26 +426,26 @@ bool_t seven_seg_reset(ecore_u8 handler) {
 	return b_ret_val;
 }
 
-bool_t seven_seg_reset(ecore_u8 handler) {
+bool_t seven_seg_reset(u8 handler) {
 	bool_t b_ret_val = E_TRUE;
  21c:	81 e0       	ldi	r24, 0x01	; 1
  21e:	08 95       	ret
 			if (ga_seven_handlers[handler].enum_type == COMMON_CATHOD) {
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 				+ 2) &= ~(0x7f);
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 						+ 2) |= pattern[0];
 			} else if (ga_seven_handlers[handler].enum_type == COMMON_ANOD) {
  220:	31 11       	cpse	r19, r1
  222:	15 c0       	rjmp	.+42     	; 0x24e <seven_seg_reset+0x76>
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 				+ 2) |= 0x7f;
  224:	e2 2f       	mov	r30, r18
  226:	f0 e0       	ldi	r31, 0x00	; 0
  228:	22 81       	ldd	r18, Z+2	; 0x02
  22a:	2f 67       	ori	r18, 0x7F	; 127
  22c:	22 83       	std	Z+2, r18	; 0x02
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
  22e:	fc 01       	movw	r30, r24
  230:	ee 0f       	add	r30, r30
  232:	ff 1f       	adc	r31, r31
@@ -461,7 +461,7 @@ bool_t seven_seg_reset(ecore_u8 handler) {
 	return b_ret_val;
 }
 
-bool_t seven_seg_reset(ecore_u8 handler) {
+bool_t seven_seg_reset(u8 handler) {
 	bool_t b_ret_val = E_TRUE;
  242:	81 e0       	ldi	r24, 0x01	; 1
  244:	08 95       	ret
@@ -482,7 +482,7 @@ bool_t seven_seg_reset(ecore_u8 handler) {
  24a:	80 e0       	ldi	r24, 0x00	; 0
  24c:	08 95       	ret
 				+ 2) |= 0x7f;
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 						+ 2) &= ~pattern[0];
 			} else {
 				/*invalid parameter*/
@@ -498,7 +498,7 @@ bool_t seven_seg_reset(ecore_u8 handler) {
 
 00000252 <seven_seg_deinit>:
 
-bool_t seven_seg_deinit(ecore_u8 handler) {
+bool_t seven_seg_deinit(u8 handler) {
 	bool_t b_ret_val = E_TRUE;
 	if ((handler < MAX_NUMBER_OF_HANDLERS)) {
  252:	82 30       	cpi	r24, 0x02	; 2
@@ -522,7 +522,7 @@ bool_t seven_seg_deinit(ecore_u8 handler) {
  272:	30 81       	ld	r19, Z
  274:	31 30       	cpi	r19, 0x01	; 1
  276:	69 f4       	brne	.+26     	; 0x292 <seven_seg_deinit+0x40>
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 						+ 2) &= ~(0x7f);
  278:	e2 2f       	mov	r30, r18
  27a:	f0 e0       	ldi	r31, 0x00	; 0
@@ -540,19 +540,19 @@ bool_t seven_seg_deinit(ecore_u8 handler) {
 	return b_ret_val;
 }
 
-bool_t seven_seg_deinit(ecore_u8 handler) {
+bool_t seven_seg_deinit(u8 handler) {
 	bool_t b_ret_val = E_TRUE;
  28e:	81 e0       	ldi	r24, 0x01	; 1
  290:	08 95       	ret
 		if (ga_seven_handlers[handler].enum_base_port != 0) {
 			if (ga_seven_handlers[handler].enum_type == COMMON_CATHOD) {
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 						+ 2) &= ~(0x7f);
 				ga_seven_handlers[handler].enum_base_port = 0;
 			} else if (ga_seven_handlers[handler].enum_type == COMMON_ANOD) {
  292:	31 11       	cpse	r19, r1
  294:	11 c0       	rjmp	.+34     	; 0x2b8 <seven_seg_deinit+0x66>
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 						+ 2) |= 0x7f;
  296:	e2 2f       	mov	r30, r18
  298:	f0 e0       	ldi	r31, 0x00	; 0
@@ -570,7 +570,7 @@ bool_t seven_seg_deinit(ecore_u8 handler) {
 	return b_ret_val;
 }
 
-bool_t seven_seg_deinit(ecore_u8 handler) {
+bool_t seven_seg_deinit(u8 handler) {
 	bool_t b_ret_val = E_TRUE;
  2ac:	81 e0       	ldi	r24, 0x01	; 1
  2ae:	08 95       	ret
@@ -590,7 +590,7 @@ bool_t seven_seg_deinit(ecore_u8 handler) {
 			b_ret_val = E_FALSE;
  2b4:	80 e0       	ldi	r24, 0x00	; 0
  2b6:	08 95       	ret
-				*(volatile ecore_u8*) (ga_seven_handlers[handler].enum_base_port
+				*(volatile u8*) (ga_seven_handlers[handler].enum_base_port
 						+ 2) |= 0x7f;
 				ga_seven_handlers[handler].enum_base_port = 0;
 			} else {

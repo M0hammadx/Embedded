@@ -11,7 +11,7 @@
 #include "seven_seg.h"
 int main(void)
 {
-	ecore_u8 id;
+	u8 id;
 	
 	seven_seg_init(BASE_C,COMMON_CATHOD,&id);
 	seven_seg_display(id,9);
