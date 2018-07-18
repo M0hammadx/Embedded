@@ -9,7 +9,7 @@
 #define SEVEN_SEG_H_
 #include "common.h"
 
-#define MAX_NUMBER_OF_HANDLERS 2
+#define MAX_NUMBER_OF_HANDLERS 4
 
 typedef enum{
 	INVALID_MIN_INDEX=0x2F,
