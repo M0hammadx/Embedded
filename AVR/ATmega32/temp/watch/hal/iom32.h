@@ -36,7 +36,7 @@
 #define _AVR_IOM32_H_ 1
 
 /* This file should only be included from <avr/io.h>, never directly. */
-
+#include <avr/sfr_defs.h>
 
 /* I/O registers */
 

@@ -8,15 +8,15 @@ C_SRCS += \
 ../Watch.c \
 ../seven_seg.c 
 
-OBJS += \
-./TMU.o \
-./Watch.o \
-./seven_seg.o 
-
 C_DEPS += \
 ./TMU.d \
 ./Watch.d \
 ./seven_seg.d 
+
+OBJS += \
+./TMU.o \
+./Watch.o \
+./seven_seg.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
