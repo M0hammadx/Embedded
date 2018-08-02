@@ -5,18 +5,15 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../hal/hal_DIO.c \
-../hal/hal_timer.c \
-../hal/keypad.c 
+../hal/hal_timer.c 
 
 C_DEPS += \
 ./hal/hal_DIO.d \
-./hal/hal_timer.d \
-./hal/keypad.d 
+./hal/hal_timer.d 
 
 OBJS += \
 ./hal/hal_DIO.o \
-./hal/hal_timer.o \
-./hal/keypad.o 
+./hal/hal_timer.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes

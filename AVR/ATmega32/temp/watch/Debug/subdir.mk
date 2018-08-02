@@ -6,16 +6,22 @@
 C_SRCS += \
 ../TMU.c \
 ../Watch.c \
+../keypad.c \
+../lcd.c \
 ../seven_seg.c 
 
 C_DEPS += \
 ./TMU.d \
 ./Watch.d \
+./keypad.d \
+./lcd.d \
 ./seven_seg.d 
 
 OBJS += \
 ./TMU.o \
 ./Watch.o \
+./keypad.o \
+./lcd.o \
 ./seven_seg.o 
 
 

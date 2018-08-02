@@ -9,6 +9,7 @@ void TIMER2_COMP_vect() {
 	if (t2_isr)
 		t2_isr();
 }
+
 s8 hal_init_timer(gcfg_hal_timer_t * obj) {
 	s8 ret_val = E_OK;
 	if (obj != NULL) {

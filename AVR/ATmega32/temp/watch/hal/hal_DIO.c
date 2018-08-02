@@ -14,6 +14,10 @@ void DIO_init_port_input(enum_port_base_t port_base, u8 port_mask) {
 	*(volatile u8*) (port_base + 1) &= ~port_mask;
 }
 
+void DIO_write_port(enum_port_base_t port_base, u8 port_mask, u8 data) {
+	*(volatile u8*) (port_base + 2) &= ~(port_mask);
+	*(volatile u8*) (port_base + 2) |= data & (port_mask);
+}
 void DIO_write_pin(enum_port_base_t port_base, u8 pin_no, bool_t data) {
 	*(volatile u8*) (port_base + 2) &= ~(1 << pin_no);
 	*(volatile u8*) (port_base + 2) |= data << pin_no;

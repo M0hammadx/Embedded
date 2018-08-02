@@ -9,7 +9,7 @@
 #define HAL_UART_USART_H_
 
 #include "../../Common.h"
-#include "../iom32.h"
+#include <avr/io.h>
 
 #define UART_Sysclk 40000000UL
 

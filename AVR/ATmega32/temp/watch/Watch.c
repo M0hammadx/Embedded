@@ -5,11 +5,12 @@
  *  Author: mh-sh
  */
 
-#include "hal/iom32.h"
+#include <avr/io.h>
 #include "TMU.h"
 #include "seven_seg.h"
 #include "hal/UART/USART.h"
 #include "hal/hal_DIO.h"
+#include "lcd.h"
 
 int currSec = 1, currMin = 10;
 u8 secID1, secID10, minID1, minID10;
@@ -28,13 +29,13 @@ void function2(void * pv) {
 }
 void function3(void * pv) {
 	seven_seg_display(minID1, currMin % 10);
-//	seven_seg_display(minID10, currMin++ / 10);
+	seven_seg_display(minID10, currMin++ / 10);
 
 }
 
 int main(void) {
-	UART_init(UART0, 9600);
-	DIO_init_port_output(BASE_B, 1);
+//	UART_init(UART0, 9600);
+//	DIO_init_port_output(BASE_B, 1);
 
 //	Timer_OBJ obj1, obj2, obj3;
 //	TMU_init(0, 5, 0);
@@ -43,15 +44,26 @@ int main(void) {
 //
 //	seven_seg_init(BASE_A, COMMON_CATHOD, &minID1);
 //	seven_seg_init(BASE_B, COMMON_CATHOD, &minID10);
-
+//
 //	TMU_addTimer(&obj1, 500, PERIODIC, function1);
 //	TMU_addTimer(&obj2, 5000, PERIODIC, function2);
 //	TMU_addTimer(&obj3, 10000, PERIODIC, function3);
+	gcfg_lcd_t lcd;
+	lcd.RS = 7;
+	lcd.RW = 6;
+	lcd.EN = 5;
+	lcd.controlPort = BASE_A;
+	lcd.dataPort = BASE_B;
+	lcd.nbit = n4BIT_MODE;
+	lcd_init(&lcd);
+//	lcd_gotoxy(&lcd, 16, 2);
+	lcd_print(&lcd, "test test");
 	while (1) {
+
 //		TMU_Dispatch();
 //		UART_sendByte(UART0, 'a');
-		if (UART_readByte(UART0) == 'a') {
-			DIO_write_pin(BASE_B, 0, !DIO_read_pin(BASE_B, 0));
-		}
+//		if (UART_readByte(UART0) == 'a') {
+//			DIO_write_pin(BASE_B, 0, !DIO_read_pin(BASE_B, 0));
+//		}
 	}
 }

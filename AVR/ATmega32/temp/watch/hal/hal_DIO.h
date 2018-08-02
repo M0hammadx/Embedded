@@ -22,6 +22,7 @@ typedef enum {
 void DIO_init_port_output(enum_port_base_t port_base, u8 port_mask);
 void DIO_init_port_input(enum_port_base_t port_base, u8 port_mask);
 
+void DIO_write_port(enum_port_base_t port_base, u8 port_mask, u8 data);
 void DIO_write_pin(enum_port_base_t port_base, u8 pin_no, bool_t data);
 
 void DIO_set_port(enum_port_base_t port_base, u8 port_mask);
