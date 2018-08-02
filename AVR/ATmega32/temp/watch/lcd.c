@@ -80,13 +80,32 @@ void lcd_send_data(gcfg_lcd_t * lcd, u8 data) {
 
 static const u8 firstCharAdr[] = { 0x80, 0xC0 };
 void lcd_gotoxy(gcfg_lcd_t * lcd, u8 x, u8 y) {
-//	if (x >= 0&&) todo
+//	if (x > 0&&) todo
 	//00-27h , 40h-67h
 
 	lcd_send_command(lcd, firstCharAdr[y - 1] + x - 1);
 }
 void lcd_print(gcfg_lcd_t * lcd, char * str) {
-	u8 i;
+	u8 i = 0;
 	while (str[i] != '\0')
 		lcd_send_data(lcd, str[i++]);
+}
+void lcd_clear(gcfg_lcd_t * lcd) {
+	lcd_send_command(lcd, 0x01); //clear
+	_delay_us(2000);
+}
+void lcd_deinit(gcfg_lcd_t * lcd) {
+	if (lcd->nbit == n4BIT_MODE) {
+		DIO_deinit_port(lcd->dataPort, 0xF0);
+	} else if (lcd->nbit == n8BIT_MODE) {
+		DIO_deinit_port(lcd->dataPort, 0xFF);
+	} else {
+		// todo error
+	}
+	DIO_deinit_port(lcd->controlPort,
+			(1 << (lcd->EN)) | (1 << (lcd->RS)) | (1 << (lcd->RW)));
+	lcd->controlPort = 0;
+	lcd->dataPort = 0;
+	lcd->nbit = 0;
+
 }

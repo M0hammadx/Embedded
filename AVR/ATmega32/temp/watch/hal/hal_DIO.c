@@ -51,5 +51,5 @@ void DIO_PullUp_pin(enum_port_base_t port_base, u8 pin_no) {
 }
 
 void DIO_deinit_port(enum_port_base_t port_base, u8 port_mask) { //todo
-
+	DIO_clear_port(port_base, port_mask);
 }

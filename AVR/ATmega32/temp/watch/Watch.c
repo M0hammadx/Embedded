@@ -56,8 +56,10 @@ int main(void) {
 	lcd.dataPort = BASE_B;
 	lcd.nbit = n4BIT_MODE;
 	lcd_init(&lcd);
-//	lcd_gotoxy(&lcd, 16, 2);
-	lcd_print(&lcd, "test test");
+	lcd_gotoxy(&lcd, 1, 1);
+	lcd_print(&lcd, "xxxx xxxx");
+	lcd_gotoxy(&lcd, 1, 2);
+	lcd_print(&lcd, "yyyy yyyy");
 	while (1) {
 
 //		TMU_Dispatch();

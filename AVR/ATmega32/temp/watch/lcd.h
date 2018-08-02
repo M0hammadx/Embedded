@@ -11,7 +11,7 @@
 #include <util/delay.h>
 
 typedef enum {
-	n4BIT_MODE, n8BIT_MODE
+	n4BIT_MODE = 1, n8BIT_MODE
 } genum_nBit_mode_t;
 
 typedef struct {
@@ -26,7 +26,7 @@ void lcd_send_command(gcfg_lcd_t * lcd, u8 cmd);
 void lcd_send_data(gcfg_lcd_t * lcd, u8 data);
 void lcd_gotoxy(gcfg_lcd_t * lcd, u8 x, u8 y);
 void lcd_print(gcfg_lcd_t * lcd, char * str);
-void lcd_clear();
+void lcd_clear(gcfg_lcd_t * lcd);
 void lcd_off();
-void lcd_deinit();
+void lcd_deinit(gcfg_lcd_t * lcd);
 #endif /* HAL_LCD_H_ */
