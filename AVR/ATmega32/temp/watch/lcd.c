@@ -10,7 +10,8 @@
 void lcd_init(gcfg_lcd_t * lcd) {
 
 	if (lcd->nbit == n4BIT_MODE) {
-		DIO_init_port_output(lcd->controlPort, 0xF0);
+		DIO_init_port_output(lcd->controlPort,
+				(1 << lcd->EN) | (1 << lcd->RS) | (1 << lcd->RW));
 		DIO_init_port_output(lcd->dataPort, 0xF0);
 	} else if (lcd->nbit == n8BIT_MODE) {
 		DIO_init_port_output(lcd->controlPort, 0xFF);

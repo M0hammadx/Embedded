@@ -7,6 +7,7 @@
 
 #ifndef HAL_LCD_H_
 #define HAL_LCD_H_
+
 #include "hal/hal_DIO.h"
 #include <util/delay.h>
 
@@ -16,8 +17,8 @@ typedef enum {
 
 typedef struct {
 	genum_nBit_mode_t nbit;
-	enum_port_base_t controlPort; //upper
-	enum_port_base_t dataPort; //lower
+	enum_port_base_t controlPort;
+	enum_port_base_t dataPort; //upper
 	u8 RS, RW, EN;
 } gcfg_lcd_t;
 
