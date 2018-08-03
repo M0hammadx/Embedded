@@ -8,8 +8,8 @@
 #ifndef HAL_TIMER_H_
 #define HAL_TIMER_H_
 #include <avr/io.h>
-#include "../common.h"
-#include "hal_system_errors.h"
+#include "../../common.h"
+#include "../hal_system_errors.h"
 
 
 typedef enum {

@@ -8,7 +8,7 @@
 #ifndef HAL_HAL_DIO_H_
 #define HAL_HAL_DIO_H_
 
-#include "../Common.h"
+#include "../../Common.h"
 
 typedef enum {
 	INVALID_MIN_INDEX = 0x2F,

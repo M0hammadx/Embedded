@@ -5,7 +5,7 @@
  *      Author: mh-sh
  */
 
-#include "hal_DIO.h"
+#include "DIO.h"
 
 void DIO_init_port_output(enum_port_base_t port_base, u8 port_mask) {
 	*(volatile u8*) (port_base + 1) |= port_mask;

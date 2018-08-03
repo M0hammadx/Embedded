@@ -8,6 +8,8 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
+#define ECU_FREQ 1000000
+
 typedef enum {
 	E_FALSE = 0, E_TRUE,
 } tenum_bool;
