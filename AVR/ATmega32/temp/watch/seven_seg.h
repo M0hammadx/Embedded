@@ -9,7 +9,7 @@
 #define SEVEN_SEG_H_
 
 #include "common.h"
-#include "hal/hal_DIO.h"
+#include "HAL/DIO/DIO.h"
 
 #define MAX_NUMBER_OF_HANDLERS 4
 

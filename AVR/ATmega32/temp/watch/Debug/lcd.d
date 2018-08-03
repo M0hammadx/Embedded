@@ -1,7 +1,7 @@
-lcd.o lcd.o: ../lcd.c ../lcd.h ../hal/hal_DIO.h ../hal/../Common.h
+lcd.o lcd.o: ../lcd.c ../lcd.h ../HAL/DIO/DIO.h ../HAL/DIO/../../Common.h
 
 ../lcd.h:
 
-../hal/hal_DIO.h:
+../HAL/DIO/DIO.h:
 
-../hal/../Common.h:
+../HAL/DIO/../../Common.h:

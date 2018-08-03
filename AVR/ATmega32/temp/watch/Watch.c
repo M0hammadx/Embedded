@@ -8,11 +8,11 @@
 #include <avr/io.h>
 #include "TMU.h"
 #include "seven_seg.h"
-#include "hal/UART/USART.h"
-#include "hal/hal_DIO.h"
+#include "hal/dio/DIO.h"
 #include "lcd.h"
 #include "keypad.h"
 #include "stdio.h"
+#include "HAL/UART/USART.h"
 
 int currSec = 1, currMin = 10;
 u8 secID1, secID10, minID1, minID10;
@@ -39,41 +39,43 @@ int main(void) {
 //	UART_init(UART0, 9600);
 //	DIO_init_port_output(BASE_B, 1);
 
-//	Timer_OBJ obj1, obj2, obj3;
-//	TMU_init(0, 5, 0);
-//	seven_seg_init(BASE_C, COMMON_CATHOD, &secID1);
-//	seven_seg_init(BASE_D, COMMON_CATHOD, &secID10);
-//
-//	seven_seg_init(BASE_A, COMMON_CATHOD, &minID1);
-//	seven_seg_init(BASE_B, COMMON_CATHOD, &minID10);
-//
-//	TMU_addTimer(&obj1, 500, PERIODIC, function1);
-//	TMU_addTimer(&obj2, 5000, PERIODIC, function2);
-//	TMU_addTimer(&obj3, 10000, PERIODIC, function3);
-	u8 key = 0;
-	char str[2];
-	gcfg_keypad_t keypad = { BASE_C, BASE_C, 0, 1, 2 };
-	keypad_init(&keypad);
-	gcfg_lcd_t lcd;
-	lcd.RS = 7;
-	lcd.RW = 6;
-	lcd.EN = 5;
-	lcd.controlPort = BASE_A;
-	lcd.dataPort = BASE_B;
-	lcd.nbit = n4BIT_MODE;
-	lcd_init(&lcd);
-	lcd_gotoxy(&lcd, 1, 1);
+	Timer_OBJ obj1, obj2, obj3;
+	TMU_init(0, 5, 0);
+	seven_seg_init(BASE_C, COMMON_CATHOD, &secID1);
+	seven_seg_init(BASE_D, COMMON_CATHOD, &secID10);
+
+	seven_seg_init(BASE_A, COMMON_CATHOD, &minID1);
+	seven_seg_init(BASE_B, COMMON_CATHOD, &minID10);
+
+	TMU_addTimer(&obj1, 500, PERIODIC, function1);
+	TMU_addTimer(&obj2, 5000, PERIODIC, function2);
+	TMU_addTimer(&obj3, 10000, PERIODIC, function3);
+
+//	u8 key = 0;
+//	char str[2];
+//	gcfg_keypad_t keypad = { BASE_C, BASE_C, 0, 1, 2 };
+//	keypad_init(&keypad);
+//	gcfg_lcd_t lcd;
+//	lcd.RS = 7;
+//	lcd.RW = 6;
+//	lcd.EN = 5;
+//	lcd.controlPort = BASE_A;
+//	lcd.dataPort = BASE_B;
+//	lcd.nbit = n4BIT_MODE;
+//	lcd_init(&lcd);
+//	lcd_gotoxy(&lcd, 1, 1);
 //	lcd_print(&lcd, "xxxx xxxx");
 //	lcd_gotoxy(&lcd, 1, 2);
 //	lcd_print(&lcd, "yyyy yyyy");
 	while (1) {
-		keypad_dispatch(&keypad);
-		if ((key = keypad_get_key(&keypad)) != 0) {
-			sprintf(str, "%d", key);
-			lcd_print(&lcd, str);
+//		keypad_dispatch(&keypad);
+//		if ((key = keypad_get_key(&keypad)) != 0) {
+//			sprintf(str, "%d", key);
+//			lcd_print(&lcd, str);
+//
+//		}
 
-		}
-//		TMU_Dispatch();
+				TMU_Dispatch();
 //		UART_sendByte(UART0, 'a');
 //		if (UART_readByte(UART0) == 'a') {
 //			DIO_write_pin(BASE_B, 0, !DIO_read_pin(BASE_B, 0));

@@ -11,7 +11,7 @@
 #include "Common.h"
 #include <avr/io.h>
 
-#define  F_CPU 1
+//#define  Freq_CPU 1
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <inttypes.h>

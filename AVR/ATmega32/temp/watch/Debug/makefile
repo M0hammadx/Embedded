@@ -8,8 +8,11 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include hal/UART/subdir.mk
--include hal/subdir.mk
+-include HAL/UART/subdir.mk
+-include HAL/TIMER/subdir.mk
+-include HAL/I2C/subdir.mk
+-include HAL/DIO/subdir.mk
+-include ECU/E2PROM/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -47,13 +50,13 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 LSS += \
-AVR_SDK.lss \
+watch.lss \
 
 FLASH_IMAGE += \
-AVR_SDK.hex \
+watch.hex \
 
 EEPROM_IMAGE += \
-AVR_SDK.eep \
+watch.eep \
 
 SIZEDUMMY += \
 sizedummy \
@@ -63,49 +66,49 @@ avrdudedummy \
 
 
 # All Target
-all: AVR_SDK.elf secondary-outputs
+all: watch.elf secondary-outputs
 
 # Tool invocations
-AVR_SDK.elf: $(OBJS) $(USER_OBJS)
+watch.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C++ Linker'
-	avr-g++ -Wl,-Map,AVR_SDK.map,--cref -mrelax -Wl,--gc-sections -mmcu=atmega32 -o "AVR_SDK.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-g++ -Wl,-Map,watch.map,--cref -mrelax -Wl,--gc-sections -mmcu=atmega32 -o "watch.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-AVR_SDK.lss: AVR_SDK.elf
+watch.lss: watch.elf
 	@echo 'Invoking: AVR Create Extended Listing'
-	-avr-objdump -h -S AVR_SDK.elf  >"AVR_SDK.lss"
+	-avr-objdump -h -S watch.elf  >"watch.lss"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-AVR_SDK.hex: AVR_SDK.elf
+watch.hex: watch.elf
 	@echo 'Create Flash image (ihex format)'
-	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex AVR_SDK.elf  "AVR_SDK.hex"
+	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex watch.elf  "watch.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-AVR_SDK.eep: AVR_SDK.elf
+watch.eep: watch.elf
 	@echo 'Create eeprom image (ihex format)'
-	-avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex AVR_SDK.elf  "AVR_SDK.eep"
+	-avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex watch.elf  "watch.eep"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-sizedummy: AVR_SDK.elf
+sizedummy: watch.elf
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega32 AVR_SDK.elf
+	-avr-size --format=avr --mcu=atmega32 watch.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
-avrdudedummy: AVR_SDK.elf
+avrdudedummy: watch.elf
 	@echo 'Invoking: AVRDude'
-	D:\eclipse\Embedded\WinAVR-20100110\bin\avrdude -pm32 -Uflash:w:AVR_SDK.hex:a
+	E:\eclipse\Embedded\WinAVR-20100110\bin\avrdude -pm32 -Uflash:w:watch.hex:a
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(C_UPPER_DEPS)$(AVRDUDEDUMMY)$(S_DEPS)$(LSS)$(C_DEPS)$(FLASH_IMAGE)$(CC_DEPS)$(ELFS)$(C++_DEPS)$(OBJS)$(CXX_DEPS)$(ASM_DEPS)$(EEPROM_IMAGE)$(SIZEDUMMY)$(S_UPPER_DEPS)$(CPP_DEPS) AVR_SDK.elf
+	-$(RM) $(C_UPPER_DEPS)$(AVRDUDEDUMMY)$(S_DEPS)$(LSS)$(C_DEPS)$(FLASH_IMAGE)$(CC_DEPS)$(ELFS)$(C++_DEPS)$(OBJS)$(CXX_DEPS)$(ASM_DEPS)$(EEPROM_IMAGE)$(SIZEDUMMY)$(S_UPPER_DEPS)$(CPP_DEPS) watch.elf
 	-@echo ' '
 
 secondary-outputs: $(LSS) $(FLASH_IMAGE) $(EEPROM_IMAGE) $(SIZEDUMMY) $(AVRDUDEDUMMY)

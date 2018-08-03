@@ -1,12 +1,12 @@
-TMU.o TMU.o: ../TMU.c ../TMU.h ../Common.h ../hal/hal_timer.h \
-  ../hal/../common.h ../hal/hal_system_errors.h
+TMU.o TMU.o: ../TMU.c ../TMU.h ../Common.h ../HAL/TIMER/timer.h \
+  ../HAL/TIMER/../../common.h ../HAL/TIMER/../hal_system_errors.h
 
 ../TMU.h:
 
 ../Common.h:
 
-../hal/hal_timer.h:
+../HAL/TIMER/timer.h:
 
-../hal/../common.h:
+../HAL/TIMER/../../common.h:
 
-../hal/hal_system_errors.h:
+../HAL/TIMER/../hal_system_errors.h:

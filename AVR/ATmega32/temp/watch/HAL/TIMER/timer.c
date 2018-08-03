@@ -1,5 +1,19 @@
-#include "hal_timer.h"
+#include "timer.h"
+
+#include <avr/interrupt.h>
+
 void (*t0_isr)(), (*t1_isr)(), (*t2_isr)();
+//ISR(TIMER0_COMP_vect) {
+//
+//	if (t0_isr)
+//		t0_isr();
+//}
+//
+//ISR(TIMER0_OVF_vect) {
+//
+//	if (t0_isr)
+//		t0_isr();
+//}
 
 void TIMER0_COMP_vect() {
 	if (t0_isr)
