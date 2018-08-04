@@ -1,24 +1,29 @@
-Watch.o Watch.o: ../Watch.c ../TMU.h ../Common.h ../seven_seg.h \
-  ../common.h ../HAL/DIO/DIO.h ../HAL/DIO/../../Common.h ../hal/dio/DIO.h \
-  ../lcd.h ../keypad.h ../HAL/UART/USART.h ../HAL/UART/../../Common.h
+Watch.o Watch.o: ../Watch.c ../service/TMU.h ../service/../Common.h \
+  ../service/seven_seg.h ../service/../common.h \
+  ../service/../HAL/DIO/DIO.h ../service/../HAL/DIO/../../Common.h \
+  ../hal/dio/DIO.h ../service/lcd.h ../service/keypad.h \
+  ../service/../hal/dio/DIO.h ../HAL/UART/USART.h \
+  ../HAL/UART/../../Common.h
 
-../TMU.h:
+../service/TMU.h:
 
-../Common.h:
+../service/../Common.h:
 
-../seven_seg.h:
+../service/seven_seg.h:
 
-../common.h:
+../service/../common.h:
 
-../HAL/DIO/DIO.h:
+../service/../HAL/DIO/DIO.h:
 
-../HAL/DIO/../../Common.h:
+../service/../HAL/DIO/../../Common.h:
 
 ../hal/dio/DIO.h:
 
-../lcd.h:
+../service/lcd.h:
 
-../keypad.h:
+../service/keypad.h:
+
+../service/../hal/dio/DIO.h:
 
 ../HAL/UART/USART.h:
 

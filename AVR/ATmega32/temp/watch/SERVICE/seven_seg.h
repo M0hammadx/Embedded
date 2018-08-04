@@ -8,8 +8,8 @@
 #ifndef SEVEN_SEG_H_
 #define SEVEN_SEG_H_
 
-#include "common.h"
-#include "HAL/DIO/DIO.h"
+#include "../common.h"
+#include "../HAL/DIO/DIO.h"
 
 #define MAX_NUMBER_OF_HANDLERS 4
 
