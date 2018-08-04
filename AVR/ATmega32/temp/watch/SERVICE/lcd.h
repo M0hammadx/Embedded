@@ -9,7 +9,7 @@
 #define HAL_LCD_H_
 
 #include <util/delay.h>
-#include "HAL/DIO/DIO.h"
+#include "../HAL/DIO/DIO.h"
 
 typedef enum {
 	n4BIT_MODE = 1, n8BIT_MODE

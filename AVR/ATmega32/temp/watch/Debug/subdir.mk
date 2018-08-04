@@ -4,25 +4,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../TMU.c \
-../Watch.c \
-../keypad.c \
-../lcd.c \
-../seven_seg.c 
+../Watch.c 
 
 C_DEPS += \
-./TMU.d \
-./Watch.d \
-./keypad.d \
-./lcd.d \
-./seven_seg.d 
+./Watch.d 
 
 OBJS += \
-./TMU.o \
-./Watch.o \
-./keypad.o \
-./lcd.o \
-./seven_seg.o 
+./Watch.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes

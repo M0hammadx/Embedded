@@ -7,10 +7,15 @@
 
 #ifndef HAL_TIMER_H_
 #define HAL_TIMER_H_
+
+#define TIMER0_HANDLERS_MAX_COUNT	1
+#define TIMER1_HANDLERS_MAX_COUNT	1
+#define TIMER2_HANDLERS_MAX_COUNT	1
+
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include "../../common.h"
 #include "../hal_system_errors.h"
-
 
 typedef enum {
 	TIMER_0, TIMER_1, TIMER_2,

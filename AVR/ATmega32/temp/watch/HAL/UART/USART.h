@@ -7,9 +7,10 @@
 
 #ifndef HAL_UART_USART_H_
 #define HAL_UART_USART_H_
-
+//todo add intr
 #include "../../Common.h"
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 #define UART_Sysclk 40000000UL
 
@@ -30,15 +31,21 @@ typedef enum { /// changed order
 typedef enum {
 	RX_BUFFER, TX_BUFFER,
 } UART_BUFFER_t;
+typedef enum {
+	USART_RXC, USART_TXC,
+} UART_INTERRUPT_t;
 
 /* *   */
 
 void UART_init(UART_NUM_t UART, u16 baudRate);
 UARTError_t UART_getError(UART_NUM_t UART);
+void UART_addISR(UART_NUM_t UART, UART_INTERRUPT_t ISR_type, void (*ISR)());
 char UART_readByte(UART_NUM_t UART);
 void UART_sendByte(UART_NUM_t UART, char Chr);
 void UART_sendString(UART_NUM_t UART, char *String);
 void UART_sendPacket(UART_NUM_t UART, char A[], u8 N);
 u8 UART_dataReady(UART_NUM_t UART);
+void UART_Flush(void);
+void UART_deinit(UART_NUM_t UART); //todo incomplete
 
 #endif /* HAL_UART_USART_H_ */

@@ -1,8 +1,11 @@
 #include "timer.h"
 
-#include <avr/interrupt.h>
 
-void (*t0_isr)(), (*t1_isr)(), (*t2_isr)();
+
+void (*t0_isr[TIMER0_HANDLERS_MAX_COUNT])(),
+		(*t1_isr[TIMER1_HANDLERS_MAX_COUNT])(),
+		(*t2_isr[TIMER2_HANDLERS_MAX_COUNT])();
+
 //ISR(TIMER0_COMP_vect) {
 //
 //	if (t0_isr)
@@ -16,12 +19,15 @@ void (*t0_isr)(), (*t1_isr)(), (*t2_isr)();
 //}
 
 void TIMER0_COMP_vect() {
-	if (t0_isr)
-		t0_isr();
+
+	for (u8 i = 0; i < TIMER0_HANDLERS_MAX_COUNT; i++)
+		if (t0_isr[i])
+			t0_isr[i]();
 }
 void TIMER2_COMP_vect() {
-	if (t2_isr)
-		t2_isr();
+	for (u8 i = 0; i < TIMER2_HANDLERS_MAX_COUNT; i++)
+		if (t2_isr[i])
+			t2_isr[i]();
 }
 
 s8 hal_init_timer(gcfg_hal_timer_t * obj) {
@@ -36,7 +42,9 @@ s8 hal_init_timer(gcfg_hal_timer_t * obj) {
 			TCCR0 |= (obj->com) << 4;
 			TIMSK |= (1 << (obj->interrupt));
 			TIFR |= (1 << (obj->interrupt));
-			t0_isr = obj->func;
+			for (u8 i = 0; i < TIMER0_HANDLERS_MAX_COUNT; i++)
+				if (!t0_isr[i])
+					t0_isr[i] = obj->func;
 			break;
 		case TIMER_1:
 
@@ -48,7 +56,10 @@ s8 hal_init_timer(gcfg_hal_timer_t * obj) {
 			TCCR2 |= (obj->com) << 4;
 			TIMSK |= (1 << (obj->interrupt + 6));
 			TIFR |= (1 << (obj->interrupt + 6));
-			t2_isr = obj->func;
+
+			for (u8 i = 0; i < TIMER2_HANDLERS_MAX_COUNT; i++)
+				if (!t2_isr[i])
+					t2_isr[i] = obj->func;
 			break;
 		}
 
@@ -180,8 +191,10 @@ s8 hal_deinit_timer(gcfg_hal_timer_t * obj) {
 			TIFR &= ~(1 << (obj->interrupt + 6));
 			break;
 		}
-		t0_isr = 0;
-		t2_isr = 0;
+		for (u8 i = 0; i < TIMER0_HANDLERS_MAX_COUNT; i++)
+			t0_isr[i] = 0;
+		for (u8 i = 0; i < TIMER2_HANDLERS_MAX_COUNT; i++)
+			t2_isr[i] = 0;
 //		} else {
 //			ret_val = INVALID_ARG;
 //		}

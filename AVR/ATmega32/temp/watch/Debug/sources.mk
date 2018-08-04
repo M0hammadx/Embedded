@@ -37,5 +37,6 @@ HAL/DIO \
 HAL/I2C \
 HAL/TIMER \
 HAL/UART \
+SERVICE \
 . \
 

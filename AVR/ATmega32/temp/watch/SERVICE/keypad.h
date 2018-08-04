@@ -8,7 +8,7 @@
 #ifndef HAL_KEYPAD_H_
 #define HAL_KEYPAD_H_
 
-#include "hal/dio/DIO.h"
+#include "../hal/dio/DIO.h"
 
 typedef struct {
 	enum_port_base_t n3Port;
