@@ -6,7 +6,11 @@
  */
 #include "TMU.h"
 
+<<<<<<< HEAD
 #include "../HAL/TIMER/timer.h"
+=======
+#include "../hal/TIMER/timer.h"
+>>>>>>> 4dc176ffe1bb20ece6c6e4ada9dacf7df24a391d
 
 static Timer_OBJ * Timer_Objects[Max_TIMERS_NO];
 static u32 timerResolution;

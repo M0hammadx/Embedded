@@ -10,6 +10,10 @@
 
 #include "../../Common.h"
 
+#define PIN	0
+#define DDR	1
+#define PORT 2
+
 typedef enum {
 	INVALID_MIN_INDEX = 0x2F,
 	BASE_D = 0x30,

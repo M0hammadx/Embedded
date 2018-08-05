@@ -33,10 +33,17 @@ CPP_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 ECU/E2PROM \
+<<<<<<< HEAD
 HAL/DIO \
 HAL/I2C \
 HAL/TIMER \
 HAL/UART \
+=======
+>>>>>>> 4dc176ffe1bb20ece6c6e4ada9dacf7df24a391d
 SERVICE \
 . \
+hal/DIO \
+hal/I2C \
+hal/TIMER \
+hal/UART \
 
