@@ -19,9 +19,20 @@ static void RX_com_reset() {
 	gRX_state = Idle;
 	RX_main_frame_current_idx = 0;
 }
+static void RX_com_callback() {
+	RX_flag_data_received = 1;
+
+	if (!RX_DataLock && RX_main_frame_current_idx < RX_data_max_size)
+		RX_main_frame.data[RX_main_frame_current_idx++] = UART_dataReady(0);
+
+}
 void RX_com_init() {
 	RX_com_reset();
 	UART_init(0, 9600); //todo zabato ba3den , add intr
+	UART_addISR(0, USART_RXC, &RX_com_callback);
+}
+void RX_com_receive(void (*hook)(u8* Rx_data)) {
+	RX_hook_receive_complete = hook;
 }
 //callback with functionality
 
@@ -32,13 +43,6 @@ void RX_com_init() {
 //
 //}
 
-static void RX_com_callback() {
-	RX_flag_data_received = 1;
-
-	if (!RX_DataLock && RX_main_frame_current_idx < RX_data_max_size)
-		RX_main_frame.data[RX_main_frame_current_idx++] = UART_dataReady(0);
-
-}
 //todo if not idle
 u8 RX_check_header() {
 
@@ -54,7 +58,7 @@ void RX_com_dispatch() {
 		switch (gRX_state) {
 
 		case Idle: {
-			if (RX_main_frame_current_idx > Header_max_size) {
+			if (RX_main_frame_current_idx > Header_size) {
 				if (RX_check_header()) {
 					gRX_state = Receive_byte;
 				} else {
@@ -68,7 +72,7 @@ void RX_com_dispatch() {
 		}
 
 		case Receive_header: {
-			if (RX_main_frame_current_idx > Header_max_size) {
+			if (RX_main_frame_current_idx > Header_size) {
 				gRX_state = Receive_byte;
 				if (RX_check_header()) {
 					RX_com_reset();
@@ -87,7 +91,7 @@ void RX_com_dispatch() {
 		}
 
 		case Receive_complete: {
-			RX_hook_receive_complete(&RX_main_frame.data);
+			RX_hook_receive_complete(RX_main_frame.data);
 			break;
 		}
 

@@ -8,19 +8,11 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
-<<<<<<< HEAD
--include SERVICE/subdir.mk
--include HAL/UART/subdir.mk
--include HAL/TIMER/subdir.mk
--include HAL/I2C/subdir.mk
--include HAL/DIO/subdir.mk
-=======
 -include hal/UART/subdir.mk
 -include hal/TIMER/subdir.mk
 -include hal/I2C/subdir.mk
 -include hal/DIO/subdir.mk
 -include SERVICE/subdir.mk
->>>>>>> 4dc176ffe1bb20ece6c6e4ada9dacf7df24a391d
 -include ECU/E2PROM/subdir.mk
 -include subdir.mk
 -include objects.mk
