@@ -12,20 +12,27 @@
 
 #define Frame__size 100
 #define Header_size 3
-#define CS_size 3
+#define CS_size 2
 #define RX_data_max_size (Frame__size-Header_size-2)
+#define TX_data_max_size RX_data_max_size
 
 typedef enum {
-	Idle, Receive_header, Receive_byte, Receive_complete
+	RX_IDLE, RECEIVE_HEADER, RECEIVE_BYTE, RECEIVE_COMPLETE,
 } RX_state;
+
+typedef enum {
+	TX_IDLE, SENDING_HEADER, SENDING_BYTE, SENDING_BYTE_COMPLETE,
+} TX_state;
 
 typedef struct {
 	u8 cmd;
-	u8 size[2];
+	u16 size;
 	u8 data[Frame__size - (1 + 2 + 2)];
-	u8 cs[CS_size];
+	u16 cs;
 } gcfg_Frame;
 
-void RX_com_dispatch();
+void RX_com_init();
+void RX_com_receive(void (*hook)(u8* Rx_data));
+RX_state RX_com_dispatch();
 
 #endif /* SERVICE_COM_H_  */

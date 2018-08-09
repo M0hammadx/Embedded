@@ -68,16 +68,19 @@ d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib
 Allocating common symbols
 Common symbol       size              file
 
+lcd                 0x6               ./Watch.o
 minID10             0x1               ./Watch.o
 t1_isr              0x2               ./hal/TIMER/timer.o
 secID1              0x1               ./Watch.o
 ISR_USART_RXC       0x2               ./hal/UART/UART.o
 ISR_USART_TXC       0x2               ./hal/UART/UART.o
+flag                0x1               ./Watch.o
 t0_isr              0x2               ./hal/TIMER/timer.o
 t2_isr              0x2               ./hal/TIMER/timer.o
 secID10             0x1               ./Watch.o
 RX_hook_receive_complete
                     0x2               ./SERVICE/com.o
+ISR_USART_DRE       0x2               ./hal/UART/UART.o
 minID1              0x1               ./Watch.o
 
 Discarded input sections
@@ -87,9 +90,11 @@ Discarded input sections
  .text          0x00000000        0x0 ./hal/UART/UART.o
  .data          0x00000000        0x0 ./hal/UART/UART.o
  .bss           0x00000000        0x0 ./hal/UART/UART.o
- .text.UART_addISR
-                0x00000000        0x0 ./hal/UART/UART.o
  .text.UART_getError
+                0x00000000        0x0 ./hal/UART/UART.o
+ .text.UART_readByte
+                0x00000000        0x0 ./hal/UART/UART.o
+ .text.UART_sendByte
                 0x00000000        0x0 ./hal/UART/UART.o
  .text.UART_sendString
                 0x00000000        0x0 ./hal/UART/UART.o
@@ -126,15 +131,9 @@ Discarded input sections
  .bss           0x00000000        0x0 ./hal/DIO/DIO.o
  .text.DIO_init_port_input
                 0x00000000        0x0 ./hal/DIO/DIO.o
- .text.DIO_write_port
-                0x00000000        0x0 ./hal/DIO/DIO.o
  .text.DIO_set_port
                 0x00000000        0x0 ./hal/DIO/DIO.o
  .text.DIO_clear_port
-                0x00000000        0x0 ./hal/DIO/DIO.o
- .text.DIO_set_pin
-                0x00000000        0x0 ./hal/DIO/DIO.o
- .text.DIO_clear_pin
                 0x00000000        0x0 ./hal/DIO/DIO.o
  .text.DIO_read_port
                 0x00000000        0x0 ./hal/DIO/DIO.o
@@ -172,7 +171,11 @@ Discarded input sections
                 0x00000000        0x0 ./SERVICE/com.o
  .text.RX_com_reset
                 0x00000000        0x0 ./SERVICE/com.o
+ .text.TX_com_callback
+                0x00000000        0x0 ./SERVICE/com.o
  .text.RX_com_callback
+                0x00000000        0x0 ./SERVICE/com.o
+ .text.chech_sum
                 0x00000000        0x0 ./SERVICE/com.o
  .text.RX_com_init
                 0x00000000        0x0 ./SERVICE/com.o
@@ -184,11 +187,17 @@ Discarded input sections
                 0x00000000        0x0 ./SERVICE/com.o
  .bss.gRX_state
                 0x00000000        0x0 ./SERVICE/com.o
+ .bss.gTX_state
+                0x00000000        0x0 ./SERVICE/com.o
  .bss.RX_main_frame_current_idx
+                0x00000000        0x0 ./SERVICE/com.o
+ .bss.TX_main_frame_current_idx
                 0x00000000        0x0 ./SERVICE/com.o
  .bss.RX_main_frame
                 0x00000000        0x0 ./SERVICE/com.o
  .bss.RX_flag_data_received
+                0x00000000        0x0 ./SERVICE/com.o
+ .bss.TX_flag_data_received
                 0x00000000        0x0 ./SERVICE/com.o
  COMMON         0x00000000        0x0 ./SERVICE/com.o
  .text          0x00000000        0x0 ./SERVICE/keypad.o
@@ -208,16 +217,6 @@ Discarded input sections
  .text          0x00000000        0x0 ./SERVICE/lcd.o
  .data          0x00000000        0x0 ./SERVICE/lcd.o
  .bss           0x00000000        0x0 ./SERVICE/lcd.o
- .text.lcd_init
-                0x00000000        0x0 ./SERVICE/lcd.o
- .text.lcd_send_command
-                0x00000000        0x0 ./SERVICE/lcd.o
- .text.lcd_send_data
-                0x00000000        0x0 ./SERVICE/lcd.o
- .rodata.firstCharAdr
-                0x00000000        0x0 ./SERVICE/lcd.o
- .text.lcd_gotoxy
-                0x00000000        0x0 ./SERVICE/lcd.o
  .text.lcd_print
                 0x00000000        0x0 ./SERVICE/lcd.o
  .text.lcd_clear
@@ -255,8 +254,7 @@ Discarded input sections
                 0x00000000        0x0 ./Watch.o
  .text.function3
                 0x00000000        0x0 ./Watch.o
- .text.rx       0x00000000        0x0 ./Watch.o
- COMMON         0x00000000        0x0 ./Watch.o
+ .text.tx       0x00000000        0x0 ./Watch.o
  .text          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodhi4.o)
  .data          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodhi4.o)
  .bss           0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodhi4.o)
@@ -286,15 +284,12 @@ Discarded input sections
  .bss           0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_addsub_sf.o)
  .data          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mul_sf.o)
  .bss           0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mul_sf.o)
- .text          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_div_sf.o)
  .data          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_div_sf.o)
  .bss           0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_div_sf.o)
- .text          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_gt_sf.o)
  .data          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_gt_sf.o)
  .bss           0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_gt_sf.o)
  .data          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ge_sf.o)
  .bss           0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ge_sf.o)
- .text          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_lt_sf.o)
  .data          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_lt_sf.o)
  .bss           0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_lt_sf.o)
  .data          0x00000000        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_si_to_sf.o)
@@ -465,7 +460,7 @@ LOAD d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x263c
+.text           0x00000000     0x3fbe
  *(.vectors)
  .vectors       0x00000000       0x54 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
                 0x00000000                __vectors
@@ -534,7 +529,6 @@ LOAD d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x0000008e                __vector_9
                 0x0000008e                __vector_2
                 0x0000008e                __vector_8
-                0x0000008e                __vector_14
                 0x0000008e                __vector_16
                 0x0000008e                __vector_18
                 0x0000008e                __vector_20
@@ -544,94 +538,121 @@ LOAD d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
                 0x000000e8                __floatdisf
  .text          0x000002de     0x1050 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divdi3.o)
                 0x000002de                __divdi3
- .text          0x0000132e      0x33a d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_addsub_sf.o)
-                0x000015c4                __subsf3
-                0x0000161a                __addsf3
- .text          0x00001668      0x1ea d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mul_sf.o)
-                0x00001668                __mulsf3
- .text          0x00001852       0x56 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ge_sf.o)
-                0x00001852                __gesf2
- .text          0x000018a8       0xb4 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_si_to_sf.o)
-                0x000018a8                __floatsisf
- .text          0x0000195c       0xa2 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_sf_to_si.o)
-                0x0000195c                __fixsfsi
- .text          0x000019fe      0x10a d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ashrdi3.o)
-                0x000019fe                __ashrdi3
- .text          0x00001b08       0x9e d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clzsi2.o)
-                0x00001b08                __clzsi2
- .text          0x00001ba6      0x1aa d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_pack_sf.o)
-                0x00001ba6                __pack_f
- .text          0x00001d50       0xf0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_unpack_sf.o)
-                0x00001d50                __unpack_f
- .text          0x00001e40       0xb2 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_fpcmp_parts_sf.o)
-                0x00001e40                __fpcmp_parts_f
-                0x00001ef2                . = ALIGN (0x2)
+ .text          0x0000132e      0x344 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_addsub_sf.o)
+                0x000015c6                __subsf3
+                0x00001620                __addsf3
+ .text          0x00001672      0x1ee d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mul_sf.o)
+                0x00001672                __mulsf3
+ .text          0x00001860      0x152 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_div_sf.o)
+                0x00001860                __divsf3
+ .text          0x000019b2       0x5a d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_gt_sf.o)
+                0x000019b2                __gtsf2
+ .text          0x00001a0c       0x5a d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ge_sf.o)
+                0x00001a0c                __gesf2
+ .text          0x00001a66       0x5a d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_lt_sf.o)
+                0x00001a66                __ltsf2
+ .text          0x00001ac0       0xb8 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_si_to_sf.o)
+                0x00001ac0                __floatsisf
+ .text          0x00001b78       0xa6 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_sf_to_si.o)
+                0x00001b78                __fixsfsi
+ .text          0x00001c1e      0x10a d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ashrdi3.o)
+                0x00001c1e                __ashrdi3
+ .text          0x00001d28       0x9e d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clzsi2.o)
+                0x00001d28                __clzsi2
+ .text          0x00001dc6      0x1aa d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_pack_sf.o)
+                0x00001dc6                __pack_f
+ .text          0x00001f70       0xf0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_unpack_sf.o)
+                0x00001f70                __unpack_f
+ .text          0x00002060       0xb2 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_fpcmp_parts_sf.o)
+                0x00002060                __fpcmp_parts_f
+                0x00002112                . = ALIGN (0x2)
  *(.text.*)
  .text.__vector_13
-                0x00001ef2       0x26 ./hal/UART/UART.o
-                0x00001ef2                __vector_13
+                0x00002112       0x34 ./hal/UART/UART.o
+                0x00002112                __vector_13
  .text.__vector_15
-                0x00001f18       0x26 ./hal/UART/UART.o
-                0x00001f18                __vector_15
+                0x00002146       0x34 ./hal/UART/UART.o
+                0x00002146                __vector_15
+ .text.__vector_14
+                0x0000217a       0x34 ./hal/UART/UART.o
+                0x0000217a                __vector_14
+ .text.UART_addISR
+                0x000021ae       0x88 ./hal/UART/UART.o
+                0x000021ae                UART_addISR
  .text.UART_init
-                0x00001f3e      0x2e4 ./hal/UART/UART.o
-                0x00001f3e                UART_init
- .text.UART_readByte
-                0x00002222       0x24 ./hal/UART/UART.o
-                0x00002222                UART_readByte
- .text.UART_sendByte
-                0x00002246       0x32 ./hal/UART/UART.o
-                0x00002246                UART_sendByte
+                0x00002236      0x2e6 ./hal/UART/UART.o
+                0x00002236                UART_init
  .text.__vector_10
-                0x00002278       0x52 ./hal/TIMER/timer.o
-                0x00002278                __vector_10
+                0x0000251c       0x52 ./hal/TIMER/timer.o
+                0x0000251c                __vector_10
  .text.__vector_4
-                0x000022ca       0x52 ./hal/TIMER/timer.o
-                0x000022ca                __vector_4
+                0x0000256e       0x52 ./hal/TIMER/timer.o
+                0x0000256e                __vector_4
  .text.DIO_init_port_output
-                0x0000231c       0x34 ./hal/DIO/DIO.o
-                0x0000231c                DIO_init_port_output
+                0x000025c0       0x34 ./hal/DIO/DIO.o
+                0x000025c0                DIO_init_port_output
+ .text.DIO_write_port
+                0x000025f4       0x5e ./hal/DIO/DIO.o
+                0x000025f4                DIO_write_port
  .text.DIO_write_pin
-                0x00002350       0x86 ./hal/DIO/DIO.o
-                0x00002350                DIO_write_pin
+                0x00002652       0x86 ./hal/DIO/DIO.o
+                0x00002652                DIO_write_pin
+ .text.DIO_set_pin
+                0x000026d8       0x4a ./hal/DIO/DIO.o
+                0x000026d8                DIO_set_pin
+ .text.DIO_clear_pin
+                0x00002722       0x4c ./hal/DIO/DIO.o
+                0x00002722                DIO_clear_pin
  .text.DIO_read_pin
-                0x000023d6       0x3c ./hal/DIO/DIO.o
-                0x000023d6                DIO_read_pin
- .text.tx       0x00002412       0x2a ./Watch.o
-                0x00002412                tx
- .text.main     0x0000243c       0x28 ./Watch.o
-                0x0000243c                main
- .text.libgcc   0x00002464       0x44 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
-                0x00002464                __udivmodsi4
- .text.libgcc   0x000024a8       0x3e d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mulsi3.o)
-                0x000024a8                __mulsi3
- .text.libgcc   0x000024e6       0x38 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
-                0x000024e6                __prologue_saves__
- .text.libgcc   0x0000251e       0x36 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
-                0x0000251e                __epilogue_restores__
+                0x0000276e       0x3c ./hal/DIO/DIO.o
+                0x0000276e                DIO_read_pin
+ .text.lcd_init
+                0x000027aa      0x406 ./SERVICE/lcd.o
+                0x000027aa                lcd_init
+ .text.lcd_send_command
+                0x00002bb0      0x89c ./SERVICE/lcd.o
+                0x00002bb0                lcd_send_command
+ .text.lcd_send_data
+                0x0000344c      0x8a6 ./SERVICE/lcd.o
+                0x0000344c                lcd_send_data
+ .text.lcd_gotoxy
+                0x00003cf2       0x44 ./SERVICE/lcd.o
+                0x00003cf2                lcd_gotoxy
+ .text.rx       0x00003d36       0x34 ./Watch.o
+                0x00003d36                rx
+ .text.main     0x00003d6a       0x7c ./Watch.o
+                0x00003d6a                main
+ .text.libgcc   0x00003de6       0x44 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+                0x00003de6                __udivmodsi4
+ .text.libgcc   0x00003e2a       0x3e d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mulsi3.o)
+                0x00003e2a                __mulsi3
+ .text.libgcc   0x00003e68       0x38 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                0x00003e68                __prologue_saves__
+ .text.libgcc   0x00003ea0       0x36 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                0x00003ea0                __epilogue_restores__
  .text.avr-libc.fplib
-                0x00002554       0x40 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(round.o)
-                0x00002554                round
+                0x00003ed6       0x40 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(round.o)
+                0x00003ed6                round
  .text.avr-libc.fplib
-                0x00002594       0x36 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_mintl.o)
-                0x00002594                __fp_mintl
+                0x00003f16       0x36 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_mintl.o)
+                0x00003f16                __fp_mintl
  .text.avr-libc.fplib
-                0x000025ca       0x1c d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_mpack.o)
-                0x000025ce                __fp_mpack_finite
-                0x000025ca                __fp_mpack
+                0x00003f4c       0x1c d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_mpack.o)
+                0x00003f50                __fp_mpack_finite
+                0x00003f4c                __fp_mpack
  .text.avr-libc.fplib
-                0x000025e6       0x44 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_split3.o)
-                0x000025e6                __fp_split3
-                0x000025f6                __fp_splitA
+                0x00003f68       0x44 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_split3.o)
+                0x00003f68                __fp_split3
+                0x00003f78                __fp_splitA
  .text.avr-libc.fplib
-                0x0000262a        0xe d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_zero.o)
-                0x0000262a                __fp_zero
-                0x0000262c                __fp_szero
-                0x00002638                . = ALIGN (0x2)
+                0x00003fac        0xe d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a(fp_zero.o)
+                0x00003fac                __fp_zero
+                0x00003fae                __fp_szero
+                0x00003fba                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00002638        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
-                0x00002638                exit
-                0x00002638                _exit
+ .fini9         0x00003fba        0x0 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x00003fba                exit
+                0x00003fba                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -650,11 +671,11 @@ LOAD d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00002638        0x4 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .fini0         0x00003fba        0x4 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000263c                _etext = .
+                0x00003fbe                _etext = .
 
-.data           0x00800060      0x108 load address 0x0000263c
+.data           0x00800060      0x10a load address 0x00003fbe
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x8 d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_thenan_sf.o)
@@ -664,33 +685,43 @@ LOAD d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
  *(.data*)
  *(.rodata)
  *(.rodata*)
+ .rodata.firstCharAdr
+                0x00800168        0x2 ./SERVICE/lcd.o
  *(.gnu.linkonce.d*)
-                0x00800168                . = ALIGN (0x2)
-                0x00800168                _edata = .
-                0x00800168                PROVIDE (__data_end, .)
+                0x0080016a                . = ALIGN (0x2)
+                0x0080016a                _edata = .
+                0x0080016a                PROVIDE (__data_end, .)
 
-.bss            0x00800168        0xa
-                0x00800168                PROVIDE (__bss_start, .)
+.bss            0x0080016a       0x17
+                0x0080016a                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
- COMMON         0x00800168        0x4 ./hal/UART/UART.o
-                0x00800168                ISR_USART_RXC
-                0x0080016a                ISR_USART_TXC
- COMMON         0x0080016c        0x6 ./hal/TIMER/timer.o
-                0x0080016c                t1_isr
-                0x0080016e                t0_isr
-                0x00800170                t2_isr
-                0x00800172                PROVIDE (__bss_end, .)
-                0x0000263c                __data_load_start = LOADADDR (.data)
-                0x00002744                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080016a        0x6 ./hal/UART/UART.o
+                0x0080016a                ISR_USART_RXC
+                0x0080016c                ISR_USART_TXC
+                0x0080016e                ISR_USART_DRE
+ COMMON         0x00800170        0x6 ./hal/TIMER/timer.o
+                0x00800170                t1_isr
+                0x00800172                t0_isr
+                0x00800174                t2_isr
+ COMMON         0x00800176        0xb ./Watch.o
+                0x00800176                lcd
+                0x0080017c                minID10
+                0x0080017d                secID1
+                0x0080017e                flag
+                0x0080017f                secID10
+                0x00800180                minID1
+                0x00800181                PROVIDE (__bss_end, .)
+                0x00003fbe                __data_load_start = LOADADDR (.data)
+                0x000040c8                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800172        0x0
-                0x00800172                PROVIDE (__noinit_start, .)
+.noinit         0x00800181        0x0
+                0x00800181                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800172                PROVIDE (__noinit_end, .)
-                0x00800172                _end = .
-                0x00800172                PROVIDE (__heap_start, .)
+                0x00800181                PROVIDE (__noinit_end, .)
+                0x00800181                _end = .
+                0x00800181                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -708,34 +739,34 @@ LOAD d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
 .signature
  *(.signature*)
 
-.stab           0x00000000     0x1a94
+.stab           0x00000000     0x2ba4
  *(.stab)
- .stab          0x00000000      0x57c ./hal/UART/UART.o
-                                0x924 (size before relaxing)
- .stab          0x0000057c      0x300 ./hal/TIMER/timer.o
-                                0xb1c (size before relaxing)
- .stab          0x0000087c      0x18c ./hal/I2C/I2C.o
-                                0x3b4 (size before relaxing)
- .stab          0x00000a08      0x258 ./hal/DIO/DIO.o
-                                0x558 (size before relaxing)
- .stab          0x00000c60      0x264 ./SERVICE/TMU.o
-                                0xa50 (size before relaxing)
- .stab          0x00000ec4      0x228 ./SERVICE/com.o
-                                0x648 (size before relaxing)
- .stab          0x000010ec      0x18c ./SERVICE/keypad.o
-                                0x3a8 (size before relaxing)
- .stab          0x00001278      0x1d4 ./SERVICE/lcd.o
-                               0x13ec (size before relaxing)
- .stab          0x0000144c      0x180 ./SERVICE/seven_seg.o
-                                0x5dc (size before relaxing)
- .stab          0x000015cc      0x1b0 ./ECU/E2PROM/E2PROM.o
-                                0x36c (size before relaxing)
- .stab          0x0000177c      0x318 ./Watch.o
-                                0x720 (size before relaxing)
+ .stab          0x00000000      0x624 ./hal/UART/UART.o
+                                0x9d8 (size before relaxing)
+ .stab          0x00000624      0x318 ./hal/TIMER/timer.o
+                                0xb34 (size before relaxing)
+ .stab          0x0000093c      0x1a4 ./hal/I2C/I2C.o
+                                0x3cc (size before relaxing)
+ .stab          0x00000ae0      0x360 ./hal/DIO/DIO.o
+                                0x570 (size before relaxing)
+ .stab          0x00000e40      0x27c ./SERVICE/TMU.o
+                                0xa68 (size before relaxing)
+ .stab          0x000010bc      0x2c4 ./SERVICE/com.o
+                                0x864 (size before relaxing)
+ .stab          0x00001380      0x1a4 ./SERVICE/keypad.o
+                                0x3c0 (size before relaxing)
+ .stab          0x00001524      0xff0 ./SERVICE/lcd.o
+                               0x1404 (size before relaxing)
+ .stab          0x00002514      0x198 ./SERVICE/seven_seg.o
+                                0x5f4 (size before relaxing)
+ .stab          0x000026ac      0x1c8 ./ECU/E2PROM/E2PROM.o
+                                0x384 (size before relaxing)
+ .stab          0x00002874      0x330 ./Watch.o
+                                0x810 (size before relaxing)
 
-.stabstr        0x00000000     0x285a
+.stabstr        0x00000000     0x2a82
  *(.stabstr)
- .stabstr       0x00000000     0x285a ./hal/UART/UART.o
+ .stabstr       0x00000000     0x2a82 ./hal/UART/UART.o
 
 .stab.excl
  *(.stab.excl)
@@ -1010,6 +1041,7 @@ DIO_read_pin                                      ./hal/DIO/DIO.o
 DIO_read_port                                     ./hal/DIO/DIO.o
                                                   ./SERVICE/keypad.o
 DIO_set_pin                                       ./hal/DIO/DIO.o
+                                                  ./Watch.o
                                                   ./SERVICE/lcd.o
 DIO_set_port                                      ./hal/DIO/DIO.o
                                                   ./SERVICE/seven_seg.o
@@ -1019,6 +1051,7 @@ DIO_write_pin                                     ./hal/DIO/DIO.o
 DIO_write_port                                    ./hal/DIO/DIO.o
                                                   ./SERVICE/lcd.o
 I2C_init                                          ./hal/I2C/I2C.o
+ISR_USART_DRE                                     ./hal/UART/UART.o
 ISR_USART_RXC                                     ./hal/UART/UART.o
 ISR_USART_TXC                                     ./hal/UART/UART.o
 RX_check_header                                   ./SERVICE/com.o
@@ -1034,6 +1067,7 @@ TMU_init                                          ./SERVICE/TMU.o
 TMU_removeTimer                                   ./SERVICE/TMU.o
 UART_Flush                                        ./hal/UART/UART.o
 UART_addISR                                       ./hal/UART/UART.o
+                                                  ./Watch.o
                                                   ./SERVICE/com.o
 UART_dataReady                                    ./hal/UART/UART.o
                                                   ./SERVICE/com.o
@@ -1043,9 +1077,7 @@ UART_init                                         ./hal/UART/UART.o
                                                   ./Watch.o
                                                   ./SERVICE/com.o
 UART_readByte                                     ./hal/UART/UART.o
-                                                  ./Watch.o
 UART_sendByte                                     ./hal/UART/UART.o
-                                                  ./Watch.o
 UART_sendPacket                                   ./hal/UART/UART.o
 UART_sendString                                   ./hal/UART/UART.o
 __addsf3                                          d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_addsub_sf.o)
@@ -1159,6 +1191,7 @@ __udivmodhi4                                      d:/eclipse/embedded/winavr-201
                                                   d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodhi4.o)
 __udivmodsi4                                      d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
                                                   d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divdi3.o)
+                                                  ./SERVICE/com.o
                                                   ./SERVICE/TMU.o
 __unpack_f                                        d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_unpack_sf.o)
                                                   d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_sf_to_si.o)
@@ -1175,7 +1208,8 @@ __vector_11                                       d:/eclipse/embedded/winavr-201
 __vector_12                                       d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
 __vector_13                                       ./hal/UART/UART.o
                                                   d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
-__vector_14                                       d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+__vector_14                                       ./hal/UART/UART.o
+                                                  d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
 __vector_15                                       ./hal/UART/UART.o
                                                   d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
 __vector_16                                       d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
@@ -1196,10 +1230,12 @@ __vector_default                                  d:/eclipse/embedded/winavr-201
 __vectors                                         d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
 _div                                              d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodhi4.o)
 _exit                                             d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+chech_sum                                         ./SERVICE/com.o
 currMin                                           ./Watch.o
 currSec                                           ./Watch.o
 exit                                              d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
                                                   d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
+flag                                              ./Watch.o
 function1                                         ./Watch.o
 function2                                         ./Watch.o
 function3                                         ./Watch.o
@@ -1215,13 +1251,17 @@ hal_update_timer                                  ./hal/TIMER/timer.o
 keypad_dispatch                                   ./SERVICE/keypad.o
 keypad_get_key                                    ./SERVICE/keypad.o
 keypad_init                                       ./SERVICE/keypad.o
+lcd                                               ./Watch.o
 lcd_clear                                         ./SERVICE/lcd.o
 lcd_deinit                                        ./SERVICE/lcd.o
 lcd_gotoxy                                        ./SERVICE/lcd.o
+                                                  ./Watch.o
 lcd_init                                          ./SERVICE/lcd.o
+                                                  ./Watch.o
 lcd_print                                         ./SERVICE/lcd.o
 lcd_send_command                                  ./SERVICE/lcd.o
 lcd_send_data                                     ./SERVICE/lcd.o
+                                                  ./Watch.o
 main                                              ./Watch.o
                                                   d:/eclipse/embedded/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32.o
 minID1                                            ./Watch.o

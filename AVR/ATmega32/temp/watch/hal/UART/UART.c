@@ -8,18 +8,39 @@
 #include "UART.h"
 #include <avr/io.h> //todo remove this
 
-void (*ISR_USART_RXC)(), (*ISR_USART_TXC)();
+void (*ISR_USART_RXC)(), (*ISR_USART_TXC)(), (*ISR_USART_DRE)();
 
 void USART_RXC_vect() {
 	if (ISR_USART_RXC)
 		ISR_USART_RXC();
+	UCSRA |= (1 << RXC);
 	sei();
 }
 void USART_TXC_vect() {
 	if (ISR_USART_TXC)
 		ISR_USART_TXC();
+	UCSRA |= (1 << TXC);
 	sei();
 }
+void USART_UDRE_vect() {
+	if (ISR_USART_DRE)
+		ISR_USART_DRE();
+	UCSRA |= (1 << TXC);
+	sei();
+}
+
+//ISR(USART_RXC_vect) {
+//	if (ISR_USART_RXC)
+//		ISR_USART_RXC();
+//	UCSRA |= (1 << RXC);
+//	sei();
+//}
+//ISR(USART_TXC_vect) {
+//	if (ISR_USART_TXC)
+//		ISR_USART_TXC();
+//	UCSRA |= (1 << TXC);
+//	sei();
+//}
 void UART_addISR(UART_NUM_t UART, UART_INTERRUPT_t ISR_type, void (*ISR)()) {
 	if (ISR_type == USART_RXC) {
 		ISR_USART_RXC = ISR;
@@ -27,6 +48,9 @@ void UART_addISR(UART_NUM_t UART, UART_INTERRUPT_t ISR_type, void (*ISR)()) {
 	} else if (ISR_type == USART_TXC) {
 		ISR_USART_TXC = ISR;
 		UCSRB |= (1 << TXCIE);
+	} else if (ISR_type == USART_DRE) {
+		ISR_USART_DRE = ISR;
+		UCSRB |= (1 << UDRIE);
 	}
 	sei();
 }
@@ -79,7 +103,7 @@ void UART_sendString(UART_NUM_t UART, char *String) {
 	}
 }
 
-void UART_sendPacket(UART_NUM_t UART, char A[], u8 N) {
+void UART_sendPacket(UART_NUM_t UART, u8 A[], u8 N) {
 	u8 i = 0;
 	while (i < N) {
 		UART_sendByte(UART, A[i++]);

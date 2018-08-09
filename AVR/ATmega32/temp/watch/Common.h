@@ -22,6 +22,9 @@ typedef enum {
 #define NULL ((void *)0)
 typedef tenum_bool bool_t;
 typedef signed char s8;
+typedef short int s16;
+typedef long int s32;
+
 typedef unsigned char u8;
 typedef unsigned short int u16;
 typedef unsigned long int u32;
