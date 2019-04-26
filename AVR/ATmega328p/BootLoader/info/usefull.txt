@@ -1,0 +1,5 @@
+find .ls file
+avr-gcc -mmcu=atmega328p -Wl,-verbose avr.c -o avr.elf | grep "opened script"
+
+combiner
+srec_cat app.hex -I bla2.hex -I -o combined.hex -I
